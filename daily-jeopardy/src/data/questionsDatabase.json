@@ -1,0 +1,38 @@
+{
+    "Science": [
+      { "clue": "This force keeps planets in orbit.", "answer": "What is gravity?" },
+      { "clue": "This process allows plants to convert sunlight into energy.", "answer": "What is photosynthesis?" },
+      { "clue": "This is the smallest unit of matter.", "answer": "What is an atom?" },
+      { "clue": "This molecule carries genetic instructions.", "answer": "What is DNA?" },
+      { "clue": "This region of space has a gravitational pull so strong that nothing can escape.", "answer": "What is a black hole?" }
+    ],
+    "History": [
+      { "clue": "He was exiled to the island of Elba in 1814.", "answer": "Who is Napoleon?" },
+      { "clue": "This cultural movement is known as the 'rebirth' of art and learning.", "answer": "What is the Renaissance?" },
+      { "clue": "This global conflict lasted from 1939 to 1945.", "answer": "What is World War II?" },
+      { "clue": "This geopolitical tension divided the world into two camps after WWII.", "answer": "What is the Cold War?" },
+      { "clue": "She was the last active ruler of the Ptolemaic Kingdom of Egypt.", "answer": "Who is Cleopatra?" }
+    ],
+    "Movies": [
+      { "clue": "This sci-fi film features the concept of dreams within dreams.", "answer": "What is Inception?" },
+      { "clue": "This 1972 movie is considered one of the greatest mafia films of all time.", "answer": "What is The Godfather?" },
+      { "clue": "This 1977 space opera introduced Luke Skywalker.", "answer": "What is Star Wars?" },
+      { "clue": "This 1999 movie featured Neo in a digital world.", "answer": "What is The Matrix?" },
+      { "clue": "This James Cameron film became the highest-grossing movie of all time.", "answer": "What is Titanic?" }
+    ],
+    "Sports": [
+      { "clue": "This is the most popular sport worldwide.", "answer": "What is soccer?" },
+      { "clue": "This event features athletes from around the globe competing in various disciplines.", "answer": "What are the Olympics?" },
+      { "clue": "This American pastime involves bases and home runs.", "answer": "What is baseball?" },
+      { "clue": "This bat-and-ball game is popular in countries like India and Australia.", "answer": "What is cricket?" },
+      { "clue": "This sport has positions like point guard and shooting guard.", "answer": "What is basketball?" }
+    ],
+    "Tech": [
+      { "clue": "This field focuses on creating intelligent machines.", "answer": "What is AI?" },
+      { "clue": "This is a device that processes information and performs calculations.", "answer": "What is a computer?" },
+      { "clue": "This global network connects millions of private, public, academic, and business networks.", "answer": "What is the Internet?" },
+      { "clue": "This programming language is named after a type of snake.", "answer": "What is Python?" },
+      { "clue": "This technology underpins cryptocurrencies like Bitcoin.", "answer": "What is blockchain?" }
+    ]
+  }
+  

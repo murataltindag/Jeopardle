@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -10,47 +10,38 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import questionsDatabase from "../data/questionsDatabase.json";
+
+interface Clue {
+  clue: string;
+  answer: string;
+}
+
+interface QuestionsDatabase {
+  [key: string]: Clue[];
+}
 
 const App = () => {
-  const categories = ["Science", "History", "Movies", "Sports", "Tech"];
   const values = [200, 400, 600, 800, 1000];
-  const clues: { [key: string]: { clue: string; answer: string }[] } = {
-  Science: [
-    { clue: "This force keeps planets in orbit.", answer: "What is gravity?" },
-    { clue: "This process allows plants to convert sunlight into energy.", answer: "What is photosynthesis?" },
-    { clue: "This is the smallest unit of matter.", answer: "What is an atom?" },
-    { clue: "This molecule carries genetic instructions.", answer: "What is DNA?" },
-    { clue: "This region of space has a gravitational pull so strong that nothing can escape.", answer: "What is a black hole?" },
-  ],
-  History: [
-    { clue: "He was exiled to the island of Elba in 1814.", answer: "Who is Napoleon?" },
-    { clue: "This cultural movement is known as the 'rebirth' of art and learning.", answer: "What is the Renaissance?" },
-    { clue: "This global conflict lasted from 1939 to 1945.", answer: "What is World War II?" },
-    { clue: "This geopolitical tension divided the world into two camps after WWII.", answer: "What is the Cold War?" },
-    { clue: "She was the last active ruler of the Ptolemaic Kingdom of Egypt.", answer: "Who is Cleopatra?" },
-  ],
-  Movies: [
-    { clue: "This sci-fi film features the concept of dreams within dreams.", answer: "What is Inception?" },
-    { clue: "This 1972 movie is considered one of the greatest mafia films of all time.", answer: "What is The Godfather?" },
-    { clue: "This 1977 space opera introduced Luke Skywalker.", answer: "What is Star Wars?" },
-    { clue: "This 1999 movie featured Neo in a digital world.", answer: "What is The Matrix?" },
-    { clue: "This James Cameron film became the highest-grossing movie of all time.", answer: "What is Titanic?" },
-  ],
-  Sports: [
-    { clue: "This is the most popular sport worldwide.", answer: "What is soccer?" },
-    { clue: "This event features athletes from around the globe competing in various disciplines.", answer: "What are the Olympics?" },
-    { clue: "This American pastime involves bases and home runs.", answer: "What is baseball?" },
-    { clue: "This bat-and-ball game is popular in countries like India and Australia.", answer: "What is cricket?" },
-    { clue: "This sport has positions like point guard and shooting guard.", answer: "What is basketball?" },
-  ],
-  Tech: [
-    { clue: "This field focuses on creating intelligent machines.", answer: "What is AI?" },
-    { clue: "This is a device that processes information and performs calculations.", answer: "What is a computer?" },
-    { clue: "This global network connects millions of private, public, academic, and business networks.", answer: "What is the Internet?" },
-    { clue: "This programming language is named after a type of snake.", answer: "What is Python?" },
-    { clue: "This technology underpins cryptocurrencies like Bitcoin.", answer: "What is blockchain?" },
-  ],
-  };
+
+  // State to hold the selected categories and clues
+  const [categories, setCategories] = useState<string[]>([]);
+  const [clues, setClues] = useState<{ [key: string]: Clue[] }>({});
+
+  // Randomize categories once when the component mounts
+  useEffect(() => {
+    const allCategories = Object.keys(questionsDatabase);
+    const randomCategories = allCategories.sort(() => 0.5 - Math.random()).slice(0, 5);
+    setCategories(randomCategories);
+
+    // Build the clues object based on the selected categories
+    const selectedClues = randomCategories.reduce((acc, category) => {
+      acc[category] = (questionsDatabase as QuestionsDatabase)[category];
+      return acc;
+    }, {} as { [key: string]: Clue[] });
+
+    setClues(selectedClues);
+  }, []);
 
   const [open, setOpen] = useState(false);
   const [selectedClue, setSelectedClue] = useState<{ clue: string; answer: string; category: string; value: number } | null>(null);
@@ -60,15 +51,9 @@ const App = () => {
   // Track the state of each question
   const [questionState, setQuestionState] = useState<{
     [category: string]: { [value: number]: { attempts: number; reveal: boolean } };
-  }>({
-    Science: {},
-    History: {},
-    Movies: {},
-    Sports: {},
-    Tech: {},
-  });
+  }>({});
 
-  const handleOpen = (category: string, value: number, clue: { clue: string; answer: string }) => {
+  const handleOpen = (category: string, value: number, clue: Clue) => {
     setSelectedClue({ ...clue, category, value });
     setOpen(true);
     setUserAnswer("");
@@ -79,7 +64,7 @@ const App = () => {
       ...prevState,
       [category]: {
         ...prevState[category],
-        [value]: prevState[category][value] || { attempts: 0, reveal: false },
+        [value]: prevState[category]?.[value] || { attempts: 0, reveal: false },
       },
     }));
   };
@@ -256,7 +241,10 @@ const App = () => {
               >
                 Submit
               </Button>
-              <Button variant="outlined" onClick={() => handleRevealAnswer(selectedClue?.category || "", selectedClue?.value || 0)}>
+              <Button
+                variant="outlined"
+                onClick={() => handleRevealAnswer(selectedClue?.category || "", selectedClue?.value || 0)}
+              >
                 Reveal Answer
               </Button>
             </>
